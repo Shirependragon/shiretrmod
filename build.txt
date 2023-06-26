@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 displayName = 老马牌娱乐装备
 author = 不愿透露姓名的夏先生
+=======
+displayName = 老马牌娱乐装备
+author = 不愿透露姓名的夏先生
+>>>>>>> a5ef89b8dcf1ddf284f2a4e9af511ed5602f10cb
 version = 0.1.5
