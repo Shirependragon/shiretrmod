@@ -55,6 +55,5 @@ namespace shiretrmod.Items
         {
             return Color.Cyan * 0.8f; // 设置物品颜色和透明度
         }
-
     }
 }

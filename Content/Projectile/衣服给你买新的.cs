@@ -113,7 +113,7 @@ namespace shiretrmod.Content.Projectile
             p += tt * p2; // + t^2 * P2
             return p;
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             // 当击中敌人时，设置敌人为目标，并标记 hasTarget 为 true
             hasTarget = true;

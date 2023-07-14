@@ -33,17 +33,17 @@ namespace shiretrmod.Items
             Item.scale = 2f;
             Item.UseSound = SoundID.Item15;
         }
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
-		//本函数为近战攻击到NPC时进行的操作，通常为产生弹幕或者BUFF
-		target.AddBuff(BuffID.OnFire, 120);//addbuff方法第一个参数为要上的BUFFID，第二个为持续时间（帧）
-		player.AddBuff(BuffID.NebulaUpLife3, 30);//为玩家添加半秒星云回复BUFF
-		//远程武器就不需要了
-            base.OnHitNPC(player, target, damage, knockBack, crit);
+            //本函数为近战攻击到NPC时进行的操作，通常为产生弹幕或者BUFF
+            target.AddBuff(BuffID.OnFire, 120);//addbuff方法第一个参数为要上的BUFFID，第二个为持续时间（帧）
+            player.AddBuff(BuffID.NebulaUpLife3, 30);//为玩家添加半秒星云回复BUFF
+                                                     //远程武器就不需要了
+            base.OnHitNPC(player, target, hit, damageDone);
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<崩崩崩>(), damage, knockback,player.whoAmI);
+            Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<崩崩崩>(), damage, knockback, player.whoAmI);
             return false;
         }
     }

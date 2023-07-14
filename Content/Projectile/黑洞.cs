@@ -50,7 +50,11 @@ namespace shiretrmod.Content.Projectile
                     // 在一定范围内杀死敌人
                     if (npc.Distance(Projectile.Center) < 32)
                     {
-                        npc.StrikeNPC(10, 0f, 0, false, false);
+                        NPC.HitInfo hitInfo = new NPC.HitInfo();
+                        hitInfo.Damage = 10; // 设置伤害值为50
+                        hitInfo.Knockback = 0; // 设置击退量为6
+                        hitInfo.Crit = true; // 设置为暴击
+                        npc.StrikeNPC(hitInfo, false, false);
                     }
                 }
             }
@@ -107,8 +111,11 @@ namespace shiretrmod.Content.Projectile
                 NPC npc = Main.npc[i];
                 if (npc.active && !npc.friendly && !npc.dontTakeDamage && npc.Distance(Projectile.Center) < explosionRange)
                 {
-                    int damage = 1000; // 伤害值
-                    npc.StrikeNPC(damage, 0f, 0, false, false);
+                    NPC.HitInfo hitInfo = new NPC.HitInfo();
+                    hitInfo.Damage = 1000; // 设置伤害值为50
+                    hitInfo.Knockback = 0; // 设置击退量为6
+                    hitInfo.Crit = true; // 设置为暴击
+                    npc.StrikeNPC(hitInfo, false, false);
                 }
             }
         }

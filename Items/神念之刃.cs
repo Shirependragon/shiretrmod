@@ -38,7 +38,7 @@ namespace shiretrmod.Items
             return base.CanUseItem(player);
         }
 
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             // 反弹弹幕逻辑
             for (int i = 0; i < Main.maxProjectiles; i++)

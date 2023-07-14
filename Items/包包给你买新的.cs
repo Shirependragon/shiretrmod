@@ -56,7 +56,7 @@ namespace shiretrmod.Items
         {
             return Color.White * 0.8f; // 设置物品颜色和透明度
         }
-        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
             Vector2 spawnPosition = target.Center; // 获取击中的NPC中心位置
             int projectileType = ModContent.ProjectileType<衣服给你买新的>(); // 替换为你想生成的弹幕类型

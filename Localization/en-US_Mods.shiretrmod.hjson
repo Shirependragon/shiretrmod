@@ -1,8 +1,7 @@
-Items: 
-{
-	吴京: {
-		DisplayName: 吴京
-		Tooltip: 爱国!
+Items: {
+	超越光: {
+		DisplayName: 超越光
+		Tooltip: 快点，快点，再快点！
 	}
 
 	随机袋: {
@@ -10,29 +9,53 @@ Items:
 		Tooltip: 欧皇竟是我自己？
 	}
 
-	开天: {
-		DisplayName: 开天
-		Tooltip: 开天辟地!
+	黑枪: {
+		DisplayName: 黑枪
+		Tooltip: ""
+	}
+
+	包包给你买新的: {
+		DisplayName: 包包给你买新的
+		Tooltip: ""
 	}
 
 	海澜之家: {
 		DisplayName: 海澜之家
 		Tooltip: 男人的时尚
 	}
-		老马徽章: {
+
+	开天: {
+		DisplayName: 开天
+		Tooltip: 开天辟地!
+	}
+
+	老马徽章: {
 		DisplayName: 老马徽章
 		Tooltip: 老马啊！老马！
 	}
-		超越光: {
-		DisplayName: 超越光
-		Tooltip: 快点，快点，再快点！
+
+	吴京: {
+		DisplayName: 吴京
+		Tooltip: 爱国!
 	}
-		夏尔秘药: {
-		DisplayName: 夏尔秘药
-		Tooltip: 那么，代价是什么呢？
+
+	滋滋滋: {
+		DisplayName: 滋滋滋
+		Tooltip: ""
+	}
+
+	神念之刃: {
+		DisplayName: 神念之刃
+		Tooltip: ""
 	}
 }
 
-Projectiles.china.DisplayName: china
-Projectiles.开天Projectile.DisplayName:开天Projectile
-Projectiles.爷的衣柜.DisplayName: 爷的衣柜
+Projectiles: {
+	黑洞.DisplayName: 黑洞
+	黑洞爆炸.DisplayName: 黑洞爆炸
+	衣服给你买新的.DisplayName: 衣服给你买新的
+	爷的衣柜.DisplayName: 爷的衣柜
+	开天Projectile.DisplayName: 开天 Projectile
+	china.DisplayName: china
+	崩崩崩.DisplayName: 崩崩崩
+}

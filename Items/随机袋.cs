@@ -7,8 +7,6 @@ namespace shiretrmod.Items
 {
     public class 随机袋 : ModItem
     {
-        
-
         public override void SetDefaults()
         {
             Item.width = 16;
@@ -19,7 +17,7 @@ namespace shiretrmod.Items
             Item.useStyle = 2;
             Item.value = Item.sellPrice(copper: 1); // 设置售价为1铜币
             Item.useTurn = true;
-            Item.autoReuse =false;
+            Item.autoReuse = false;
         }
 
 
@@ -44,7 +42,7 @@ namespace shiretrmod.Items
         void SpawnCoins(Player player)
         {
             int coinAmount = Main.rand.Next(1, 6); // 生成1到5个金币
-            player.QuickSpawnItem(new EntitySource_DebugCommand($"{nameof(shiretrmod)}_{nameof(shiretrmod)}"),ItemID.CopperCoin, coinAmount);
+            player.QuickSpawnItem(new EntitySource_DebugCommand($"{nameof(shiretrmod)}_{nameof(shiretrmod)}"), ItemID.CopperCoin, coinAmount);
         }
 
         void SpawnItems(Player player)
@@ -57,9 +55,8 @@ namespace shiretrmod.Items
             {
                 int randomIndex = Main.rand.Next(itemIds.Length);
                 int itemId = itemIds[randomIndex];
-                player.QuickSpawnItem(new EntitySource_DebugCommand($"{nameof(shiretrmod)}_{nameof(shiretrmod)}"), itemId,1);
+                player.QuickSpawnItem(new EntitySource_DebugCommand($"{nameof(shiretrmod)}_{nameof(shiretrmod)}"), itemId, 1);
             }
         }
-
     }
 }
