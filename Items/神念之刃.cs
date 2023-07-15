@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using shiretrmod.Content.Buff;
 
 namespace shiretrmod.Items
 {
@@ -11,8 +12,10 @@ namespace shiretrmod.Items
         public override void SetDefaults()
         {
             Item.damage = 40;
+            Item.DamageType = DamageClass.Generic;
             Item.width = 40;
             Item.height = 40;
+            Item.scale = 3;
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.Swing;
@@ -21,35 +24,62 @@ namespace shiretrmod.Items
             Item.rare = ItemRarityID.Green;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
-            Item.useTurn = true;
+            Item.useTurn = false;
             Item.shoot = ProjectileID.None;
             Item.shootSpeed = 0f;
+            Item.accessory = true;
         }
 
         public override bool CanUseItem(Player player)
         {
-            // 检测右键点击事件，并触发冲刺效果
-            if (player.itemAnimation == 0 && player.altFunctionUse == 2 && player.HeldItem.type == Item.type)
+
+            float dashDistance = 20f; // 冲刺距离
+            Vector2 dashVelocity = Vector2.Normalize(Main.MouseWorld - player.Center) * dashDistance;
+            player.velocity = dashVelocity;
+
+            // 使玩家朝向鼠标
+            // 获取鼠标在游戏世界中的位置
+            Vector2 mousePosition = Main.MouseWorld;
+
+            // 判断玩家应该面向哪个方向
+            if (player.position.X + (player.width / 2) < mousePosition.X)
             {
-                float dashDistance = 500f; // 冲刺距离
-                Vector2 dashVelocity = Vector2.Normalize(Main.MouseWorld - player.Center) * dashDistance;
-                player.velocity = dashVelocity;
+                player.direction = 1; // 面向右边
+            }
+            else
+            {
+                player.direction = -1; // 面向左边
             }
             return base.CanUseItem(player);
         }
-
-        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
+        public override bool? UseItem(Player player)
         {
-            // 反弹弹幕逻辑
-            for (int i = 0; i < Main.maxProjectiles; i++)
+            foreach (Projectile proj in Main.projectile) // 遍历所有的projectile
             {
-                Projectile projectile = Main.projectile[i];
-                if (projectile.active && projectile.hostile && !projectile.friendly && projectile.damage > 0 && player.Distance(projectile.Center) <= 40f)
+
+                if (proj.hostile && !proj.friendly && player.Distance(proj.Center) <= 150f) // 如果是敌对弹幕，并且距离玩家足够近
                 {
-                    projectile.velocity *= -1; // 反弹弹幕
-                    projectile.owner = player.whoAmI; // 将弹幕归属于玩家
+                    // 反弹并设置为友好弹幕
+                    proj.velocity *= -1;
+                    proj.owner = player.whoAmI;
+                    proj.hostile = false;
+                    proj.friendly = true;
                 }
             }
+            return base.UseItem(player);
+        }
+        public override void HoldItem(Player player)
+        {
+            player.AddBuff(ModContent.BuffType<实质化的信念>(), 60);
+            base.HoldItem(player);
+        }
+
+        public override void UpdateAccessory(Player player, bool hideVisual) // 饰品属性设置
+        {
+            // +8防御，*1.25速度
+            player.statDefense += 8;
+            player.moveSpeed *= 1.25f;
+            base.UpdateAccessory(player, hideVisual);
         }
     }
 }
