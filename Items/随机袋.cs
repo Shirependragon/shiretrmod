@@ -20,19 +20,25 @@ namespace shiretrmod.Items
             Item.autoReuse = false;
         }
 
+        // public override bool CanUseItem(Player player)
+        // {
+        //     return true;
+        // }
 
-        public override bool CanUseItem(Player player)
+        // public override bool? UseItem(Player player)
+        // {
+        //     SpawnRewards(player);
+        //     Item.stack--;
+        //     return true;
+        // }
+        public override bool CanRightClick()
         {
             return true;
         }
-
-        public override bool? UseItem(Player player)
+        public override void RightClick(Player player)
         {
             SpawnRewards(player);
-            Item.stack--;
-            return true;
         }
-
         void SpawnRewards(Player player)
         {
             SpawnCoins(player);
@@ -47,9 +53,9 @@ namespace shiretrmod.Items
 
         void SpawnItems(Player player)
         {
-            int[] itemIds = { ItemID.DirtBlock, ItemID.Wood }; // 需要生成的物品ID数组
+            int[] itemIds = { ModContent.ItemType<包包给你买新的>(), ModContent.ItemType<超越光>(), ModContent.ItemType<海澜之家>(), ModContent.ItemType<黑枪>(), ModContent.ItemType<开天>(), ModContent.ItemType<老马徽章>(), ModContent.ItemType<神念之刃>(), ModContent.ItemType<吴京>(), ModContent.ItemType<滋滋滋>(), }; // 需要生成的物品ID数组
 
-            int itemAmount = Main.rand.Next(1, 10); // 生成0到3个物品
+            int itemAmount = Main.rand.Next(1, 2); // 生成0到3个物品
 
             for (int i = 0; i < itemAmount; i++)
             {
@@ -57,6 +63,13 @@ namespace shiretrmod.Items
                 int itemId = itemIds[randomIndex];
                 player.QuickSpawnItem(new EntitySource_DebugCommand($"{nameof(shiretrmod)}_{nameof(shiretrmod)}"), itemId, 1);
             }
+        }
+        public override void AddRecipes()
+        {
+            Recipe recipe = CreateRecipe();
+            recipe.AddIngredient(ItemID.GoldBar, 1); // 1个金锭
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
         }
     }
 }

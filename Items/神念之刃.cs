@@ -8,7 +8,6 @@ namespace shiretrmod.Items
 {
     public class 神念之刃 : ModItem
     {
-
         public override void SetDefaults()
         {
             Item.damage = 40;
@@ -33,23 +32,6 @@ namespace shiretrmod.Items
         public override bool CanUseItem(Player player)
         {
 
-            float dashDistance = 20f; // 冲刺距离
-            Vector2 dashVelocity = Vector2.Normalize(Main.MouseWorld - player.Center) * dashDistance;
-            player.velocity = dashVelocity;
-
-            // 使玩家朝向鼠标
-            // 获取鼠标在游戏世界中的位置
-            Vector2 mousePosition = Main.MouseWorld;
-
-            // 判断玩家应该面向哪个方向
-            if (player.position.X + (player.width / 2) < mousePosition.X)
-            {
-                player.direction = 1; // 面向右边
-            }
-            else
-            {
-                player.direction = -1; // 面向左边
-            }
             return base.CanUseItem(player);
         }
         public override bool? UseItem(Player player)
@@ -70,15 +52,40 @@ namespace shiretrmod.Items
         }
         public override void HoldItem(Player player)
         {
-            player.AddBuff(ModContent.BuffType<实质化的信念>(), 60);
+            player.AddBuff(ModContent.BuffType<DamageReduction>(), 60);
+            if (Main.mouseRight && !player.HasBuff<DashCooldown>())
+            {
+                float dashDistance = 25f; // 冲刺距离
+                Vector2 dashVelocity = Vector2.Normalize(Main.MouseWorld - player.Center) * dashDistance;
+                player.velocity = dashVelocity;
+
+                // 使玩家朝向鼠标
+                // 获取鼠标在游戏世界中的位置
+                Vector2 mousePosition = Main.MouseWorld;
+
+                // 判断玩家应该面向哪个方向
+                if (player.position.X + (player.width / 2) < mousePosition.X)
+                {
+                    player.direction = 1; // 面向右边
+                }
+                else
+                {
+                    player.direction = -1; // 面向左边
+                }
+                player.AddBuff(ModContent.BuffType<DashCooldown>(), 90);
+            }
+
             base.HoldItem(player);
         }
-
+        public override void Update(ref float gravity, ref float maxFallSpeed)
+        {
+            base.Update(ref gravity, ref maxFallSpeed);
+        }
         public override void UpdateAccessory(Player player, bool hideVisual) // 饰品属性设置
         {
             // +8防御，*1.25速度
-            player.statDefense += 8;
-            player.moveSpeed *= 1.25f;
+            player.endurance += 0.25f;
+            player.moveSpeed += 1.25f;
             base.UpdateAccessory(player, hideVisual);
         }
     }
