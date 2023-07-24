@@ -1,0 +1,18 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "E:/SteamLibrary/steamapps/common/tModLoader/tModLoader.dll",
+            "cwd": "E:/SteamLibrary/steamapps/common/tModLoader/",
+            "requireExactSource": false,
+            "justMyCode": false,
+            "suppressJITOptimizations": false // true, if the debugger is skipping lines or otherwise acting weirdly, will probably slow down the game significantly
+        }
+    ]
+}

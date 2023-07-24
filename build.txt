@@ -1,5 +1,5 @@
 displayName = 老马牌娱乐装备
 author = 不愿透露姓名的夏先生
-version = 0.1.8
+version = 0.1.9
 homepage = https://github.com/Shirependragon/shiretrmod
 includeSource = true
