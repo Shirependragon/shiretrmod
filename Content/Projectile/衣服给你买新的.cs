@@ -32,13 +32,22 @@ namespace shiretrmod.Content.Projectile
             Projectile.extraUpdates = 1;//额外刷新
             Projectile.localNPCHitCooldown = 1;//独立无敌帧
         }
-        private bool hasTarget;
-        private int targetNPCIndex;
-        private Vector2 targetPosition;
-
         public override void AI()
         {
+            Vector2 targetPosition;
             Player player = Main.player[Projectile.owner];
+            bool hasTarget = false;
+            int NPCindex = -1;
+            float dist = 450f;
+            foreach (NPC npc in Main.npc)
+            {
+                if (!npc.friendly && npc.active && (player.position - npc.position).Length() < dist)
+                {
+                    dist = (player.position - npc.position).Length();
+                    NPCindex = npc.whoAmI;
+                    hasTarget = true;
+                }
+            }
 
             if (!hasTarget)
             {
@@ -48,9 +57,9 @@ namespace shiretrmod.Content.Projectile
             else
             {
                 // 当有敌人目标时，追踪敌人位置
-                if (targetNPCIndex != -1)
+                if (NPCindex != -1)
                 {
-                    NPC npc = Main.npc[targetNPCIndex];
+                    NPC npc = Main.npc[NPCindex];
                     targetPosition = npc.Center;
                 }
                 else
@@ -75,7 +84,7 @@ namespace shiretrmod.Content.Projectile
             Projectile.ai[0]++;
 
             // 如果超过一定时间，让弹幕消失
-            if (Projectile.ai[0] > 100)
+            if (Projectile.ai[0] > 150)
             {
                 Projectile.Kill();
             }
@@ -116,8 +125,8 @@ namespace shiretrmod.Content.Projectile
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             // 当击中敌人时，设置敌人为目标，并标记 hasTarget 为 true
-            hasTarget = true;
-            targetNPCIndex = target.whoAmI;
+            // hasTarget = true;
+            // targetNPCIndex = target.whoAmI;
         }
         public override bool PreDraw(ref Color lightColor)
         {

@@ -14,7 +14,7 @@ namespace shiretrmod.Items
             Item.DamageType = DamageClass.Generic;
             Item.width = 40;
             Item.height = 40;
-            Item.scale = 3;
+            Item.scale = 2.2f;
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.Swing;

@@ -31,76 +31,86 @@ namespace shiretrmod.Content.Projectile
             Projectile.ignoreWater = false;//是否水中减速
             Projectile.extraUpdates = 1;//额外刷新
             Projectile.localNPCHitCooldown = 10;//独立无敌帧
+            Projectile.timeLeft = 300;
         }
 
         public override void AI()
         {
-            float MaxSpeed = 10f; // 横纵向最大速度
-            float accSpeed = 0.5f; // 横纵向加速度
-            float switchDistance = 50f; // 切换追击方式的距离阈值
+            // float MaxSpeed = 10f; // 横纵向最大速度
+            // float accSpeed = 0.5f; // 横纵向加速度
+            // float switchDistance = 50f; // 切换追击方式的距离阈值
 
-            NPC targetNPC = null;
-            float minDistance = float.MaxValue;
+            // NPC targetNPC = null;
+            // float minDistance = float.MaxValue;
 
-            // 寻找最近的敌对NPC
-            for (int i = 0; i < Main.npc.Length; i++)
-            {
-                NPC npc = Main.npc[i];
-                if (npc.active && npc.CanBeChasedBy() && npc.lifeMax > 5 && npc.life > 0 && npc.friendly == false)
-                {
-                    float distance = Vector2.Distance(Projectile.Center, npc.Center);
-                    if (distance < minDistance)
-                    {
-                        minDistance = distance;
-                        targetNPC = npc;
-                    }
-                }
-            }
+            // // 寻找最近的敌对NPC
+            // for (int i = 0; i < Main.npc.Length; i++)
+            // {
+            //     NPC npc = Main.npc[i];
+            //     if (npc.active && npc.CanBeChasedBy() && npc.lifeMax > 5 && npc.life > 0 && npc.friendly == false)
+            //     {
+            //         float distance = Vector2.Distance(Projectile.Center, npc.Center);
+            //         if (distance < minDistance)
+            //         {
+            //             minDistance = distance;
+            //             targetNPC = npc;
+            //         }
+            //     }
+            // }
 
-            if (targetNPC != null)
-            {
-                if (minDistance > switchDistance)
-                {
-                    // 使用插值渐进运动追击最近敌对NPC
-                    Vector2 targetPos = targetNPC.Center;
-                    Vector2 pos = Vector2.Lerp(Projectile.Center, targetPos, 0.1f);
-                    Projectile.velocity = pos - Projectile.Center;
-                }
-                else
-                {
-                    // 使用正交惯性追击最近敌对NPC
-                    Vector2 targetPos = targetNPC.Center;
+            // if (targetNPC != null)
+            // {
+            //     if (minDistance > switchDistance)
+            //     {
+            //         // 使用插值渐进运动追击最近敌对NPC
+            //         Vector2 targetPos = targetNPC.Center;
+            //         Vector2 pos = Vector2.Lerp(Projectile.Center, targetPos, 0.1f);
+            //         Projectile.velocity = pos - Projectile.Center;
+            //     }
+            //     else
+            //     {
+            //         // 使用正交惯性追击最近敌对NPC
+            //         Vector2 targetPos = targetNPC.Center;
 
-                    if (Projectile.Center.X - targetPos.X < 0f)
-                        Projectile.velocity.X += Projectile.velocity.X < 0 ? 2 * accSpeed : accSpeed;
-                    else
-                        Projectile.velocity.X -= Projectile.velocity.X > 0 ? 2 * accSpeed : accSpeed;
+            //         if (Projectile.Center.X - targetPos.X < 0f)
+            //             Projectile.velocity.X += Projectile.velocity.X < 0 ? 2 * accSpeed : accSpeed;
+            //         else
+            //             Projectile.velocity.X -= Projectile.velocity.X > 0 ? 2 * accSpeed : accSpeed;
 
-                    if (Projectile.Center.Y - targetPos.Y < 0f)
-                        Projectile.velocity.Y += Projectile.velocity.Y < 0 ? 2 * accSpeed : accSpeed;
-                    else
-                        Projectile.velocity.Y -= Projectile.velocity.Y > 0 ? 2 * accSpeed : accSpeed;
+            //         if (Projectile.Center.Y - targetPos.Y < 0f)
+            //             Projectile.velocity.Y += Projectile.velocity.Y < 0 ? 2 * accSpeed : accSpeed;
+            //         else
+            //             Projectile.velocity.Y -= Projectile.velocity.Y > 0 ? 2 * accSpeed : accSpeed;
 
-                    if (Math.Abs(Projectile.velocity.X) > MaxSpeed)
-                        Projectile.velocity.X = MaxSpeed * Math.Sign(Projectile.velocity.X);
+            //         if (Math.Abs(Projectile.velocity.X) > MaxSpeed)
+            //             Projectile.velocity.X = MaxSpeed * Math.Sign(Projectile.velocity.X);
 
-                    if (Math.Abs(Projectile.velocity.Y) > MaxSpeed)
-                        Projectile.velocity.Y = MaxSpeed * Math.Sign(Projectile.velocity.Y);
-                }
+            //         if (Math.Abs(Projectile.velocity.Y) > MaxSpeed)
+            //             Projectile.velocity.Y = MaxSpeed * Math.Sign(Projectile.velocity.Y);
+            //     }
 
-            }
-            else
-            {
-                // 没有检测到敌人时，围绕玩家转动
-                Player player = Main.player[Projectile.owner];
-                Vector2 playerPos = player.Center;
-                float radius = 100f;
-                float rotationSpeed = 0.05f;
-                float angle = Projectile.velocity.ToRotation() + rotationSpeed;
-                Vector2 newPos = playerPos + new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)) * radius;
-                Projectile.velocity = newPos - Projectile.Center;
-            }
+            // }
+            // else
+            // {
+            //     // 没有检测到敌人时，围绕玩家转动
+            //     Player player = Main.player[Projectile.owner];
+            //     Vector2 playerPos = player.Center;
+            //     float radius = 100f;
+            //     float rotationSpeed = 0.05f;
+            //     float angle = Projectile.velocity.ToRotation() + rotationSpeed;
+            //     Vector2 newPos = playerPos + new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)) * radius;
+            //     Projectile.velocity = newPos - Projectile.Center;
+            // }
 
+            // 围绕玩家转动
+            Player player = Main.player[Projectile.owner];
+            Vector2 playerPos = player.Center;
+            float radius = 100f;
+            float rotationSpeed = 0.05f;
+            float angle = Projectile.velocity.ToRotation() + rotationSpeed;
+            Vector2 newPos = playerPos + new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle)) * radius;
+            Projectile.velocity = newPos - Projectile.Center;
+            
             // 自动绘制时的帧图控制
             int animationSpeed = 3; // 调整动画速度
             Projectile.frameCounter++;
@@ -123,7 +133,7 @@ namespace shiretrmod.Content.Projectile
             for (int i = 0; i < 5; i++)
             {
                 float alpha = 0.5f - (float)i * 0.1f; // 设置透明度递减
-                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 292, 0f, 0f, 0, default, 1f);
+                int dustIndex = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Vortex, 0f, 0f, 0, default, 1f);
                 Main.dust[dustIndex].position = Projectile.Center;
                 Main.dust[dustIndex].velocity = Vector2.Zero;
                 Main.dust[dustIndex].noGravity = true;

@@ -59,3 +59,15 @@ Projectiles: {
 	china.DisplayName: china
 	崩崩崩.DisplayName: 崩崩崩
 }
+
+Buffs: {
+	DamageReduction: {
+		DisplayName: Damage Reduction
+		Description: Mods.shiretrmod.Buffs.DamageReduction.Description
+	}
+
+	DashCooldown: {
+		DisplayName: Dash Cooldown
+		Description: Mods.shiretrmod.Buffs.DashCooldown.Description
+	}
+}

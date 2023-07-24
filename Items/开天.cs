@@ -33,26 +33,17 @@ namespace shiretrmod.Items
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             // 检查玩家是否已经拥有弹幕
-            bool hasProjectiles = false;
-            for (int i = 0; i < Main.projectile.Length; i++)
+            foreach (Projectile proj in Main.projectile)
             {
-                Projectile projectile = Main.projectile[i];
-                if (projectile.active && projectile.owner == player.whoAmI)
+                if (proj.active && proj.owner == player.whoAmI && proj.type == ModContent.ProjectileType<开天Projectile>())
                 {
-                    hasProjectiles = true;
-                    break;
+                    // 如果玩家已经拥有弹幕，则刷新此弹幕的存在时间，并不发射新的弹幕
+                    proj.timeLeft = 300;
+                    return false;
                 }
             }
-
-            // 如果玩家已经拥有弹幕，则不发射新的弹幕
-            if (hasProjectiles)
-            {
-                return false;
-            }
-            else
-            {
+            
             return true;
-            }
         }
         public override void HoldItem(Player player)
         {
